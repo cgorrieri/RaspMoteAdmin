@@ -16,7 +16,7 @@
         <td><%= outlet.name %></td>
         <td>
             <div class="onoffswitch">
-              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="outlet_<%= outlet.id %>" <% if(outlet.state) %>checked<% end %> onclick="alert(this.checked)"/>
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="outlet_<%= outlet.id %>" <% if(outlet.state) %>checked<% end %> onclick="switchOnOff(<%= outlet.id %>)"/>
               <label class="onoffswitch-label" for="outlet_<%= outlet.id %>">
                 <div class="onoffswitch-inner"></div>
                 <div class="onoffswitch-switch"></div>
@@ -24,7 +24,7 @@
             </div>
         </td>
         <td><%= link_to 'Edit', edit_outlet_path(outlet) %></td>
-        <td><%= link_to 'Destroy', outlet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', outlet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,11 +1,15 @@
 class OutletsController < ApplicationController
+  include OutletsHelper
+
   http_basic_authenticate_with :name => "admin", :password => "admin"
 
   # GET /outlets
   # GET /outlets.json
   def index
-    @outlets = Outlet.order("room DESC")
+    #@outlets = Outlet.order("room DESC")
 
+    @outlets = WebService.instance.getlistoutlets
+    logger.debug @outlets
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @outlets }
@@ -32,6 +36,7 @@ class OutletsController < ApplicationController
   # POST /outlets.json
   def create
     @outlet = Outlet.new(params[:outlet])
+
 
     respond_to do |format|
       if @outlet.save
@@ -68,7 +73,17 @@ class OutletsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to outlets_url }
-      format.json { head :no_content }
+      format.json { render :success => true }
     end
+  end
+
+  # PUT /outlets/1/switchonfoff
+  # PUT /outlets/1.json
+  def switchonoff
+    outlet = Outlet.find(params[:id])
+    WebService.instance.switchonoff(outlet.uuid, !outlet.state)
+    outlet.update_attributes({state: !outlet.state})
+    
+    render json: {:success => true}
   end
 end

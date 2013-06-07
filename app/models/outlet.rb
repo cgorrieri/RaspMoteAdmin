@@ -1,3 +1,3 @@
 class Outlet < ActiveRecord::Base
-  attr_accessible :name, :room, :state
+  attr_accessible :uuid, :name, :room, :state
 end

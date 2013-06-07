@@ -13,3 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+switchOnOff = function(id) {
+    $.ajax({
+        url: "/outlets/"+id+"/switchonoff",
+        type:"POST"
+    }).done(function() {
+        console.log("transaction done !");
+    });
+};

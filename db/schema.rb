@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(:version => 20130606110539) do
 
   create_table "outlets", :force => true do |t|
+    t.integer  "uuid"
     t.string   "name"
     t.string   "room"
     t.boolean  "state"
