@@ -37,6 +37,8 @@ class OutletsController < ApplicationController
   def create
     @outlet = Outlet.new(params[:outlet])
 
+    WebService.instance.addoutlet(@outlet)
+    logger.debug @outlet
 
     respond_to do |format|
       if @outlet.save
@@ -69,6 +71,7 @@ class OutletsController < ApplicationController
   # DELETE /outlets/1.json
   def destroy
     @outlet = Outlet.find(params[:id])
+    WebService.instance.removeoutlet(@outlet)
     @outlet.destroy
 
     respond_to do |format|
