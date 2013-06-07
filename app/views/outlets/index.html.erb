@@ -1,0 +1,35 @@
+<h1>Listing outlets</h1>
+
+<table>
+  <thead>
+    <th>Room</th>
+    <th>Name</th>
+    <th>State</th>
+    <th></th>
+    <th></th>
+  </thead>
+
+  <tbody>
+    <% @outlets.each do |outlet| %>
+      <tr>
+        <td><%= outlet.room %></td>
+        <td><%= outlet.name %></td>
+        <td>
+            <div class="onoffswitch">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="outlet_<%= outlet.id %>" <% if(outlet.state) %>checked<% end %> onclick="alert(this.checked)"/>
+              <label class="onoffswitch-label" for="outlet_<%= outlet.id %>">
+                <div class="onoffswitch-inner"></div>
+                <div class="onoffswitch-switch"></div>
+              </label>
+            </div>
+        </td>
+        <td><%= link_to 'Edit', edit_outlet_path(outlet) %></td>
+        <td><%= link_to 'Destroy', outlet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Outlet', new_outlet_path %>
