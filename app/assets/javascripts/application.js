@@ -14,9 +14,10 @@
 //= require jquery_ujs
 //= require_tree .
 
-switchOnOff = function(id) {
+switchOnOff = function(id, state) {
+    console.log(state);
     $.ajax({
-        url: "/outlets/"+id+"/switchonoff",
+        url: "/outlets/"+id+"/"+state+"/switchonoff",
         type:"POST"
     }).done(function() {
         console.log("transaction done !");

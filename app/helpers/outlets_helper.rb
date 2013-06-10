@@ -4,7 +4,7 @@ module OutletsHelper
     def initialize
       wsdl_url = "http://localhost:9999/ws/raspberry?wsdl"
       @publicWS = SOAP::WSDLDriverFactory.new(wsdl_url).create_rpc_driver
-      wsdl_url_admin = "http://localhost:9999/ws/admin?wsdl"
+      wsdl_url_admin = "http://localhost:9991/ws/admin?wsdl"
       @adminWS = SOAP::WSDLDriverFactory.new(wsdl_url_admin).create_rpc_driver
     end
 
@@ -30,14 +30,7 @@ module OutletsHelper
     end
 
     def getOutlet(item)
-      o = Outlet.where(uuid:item.id).first
-      if o then
-        o.update_attributes(room:item.room, state:item.state, name:item.name)
-      else
-        o = Outlet.new(uuid:item.id, room:item.room, state:item.state, name:item.name)
-        o.save
-      end
-      return o
+      return Outlet.new(uuid:item.id, room:item.room, state:item.state, name:item.name)
     end
 
     def switchonoff(uuid, state)
@@ -53,8 +46,21 @@ module OutletsHelper
       o.uuid = id
     end
 
-    def removeoutlet(o)
-      @adminWS.remove_outlet(o.uuid)
+    def removeoutlet(uuid)
+      @adminWS.remove_outlet(uuid)
+    end
+
+    def getoutlet(id)
+      ret = @adminWS.get_outlet(id)[0]
+      if(ret != "")
+        return getOutlet(ret)
+      else
+        return nil
+      end
+    end
+
+    def updateoutlet(o)
+      @adminWS.update_outlet(o.uuid, o.name, o.room, o.state)
     end
 
     private_class_method :new
