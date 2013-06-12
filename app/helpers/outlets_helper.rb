@@ -4,7 +4,7 @@ module OutletsHelper
     def initialize
       wsdl_url = "http://localhost:9999/ws/raspberry?wsdl"
       @publicWS = SOAP::WSDLDriverFactory.new(wsdl_url).create_rpc_driver
-      wsdl_url_admin = "http://localhost:9991/ws/admin?wsdl"
+      wsdl_url_admin = "http://localhost:9997/ws/admin?wsdl"
       @adminWS = SOAP::WSDLDriverFactory.new(wsdl_url_admin).create_rpc_driver
     end
 
@@ -15,10 +15,11 @@ module OutletsHelper
     end
 
     def getlistoutlets
-      ret = @publicWS.getListOutlet[0];
+      ret = @adminWS.get_list_outlet[0];
       outlets = Array.new
       if(ret != "") then
         if ret.item.kind_of?(Array) then
+          Rails.logger.debug(ret.item)
           ret.item.each{|item|
             outlets.push(getOutlet(item))
           }
@@ -30,7 +31,8 @@ module OutletsHelper
     end
 
     def getOutlet(item)
-      return Outlet.new(uuid:item.id, room:item.room, state:item.state, name:item.name)
+      return Outlet.new(uuid:item.id, room:item.room, state:item.state, name:item.name,
+                        comNb:item.comNb, nbId:item.nbId)
     end
 
     def switchonoff(uuid, state)
@@ -42,7 +44,7 @@ module OutletsHelper
     end
 
     def addoutlet(o)
-      id = @adminWS.add_outlet(o.room, o.name)
+      id = @adminWS.add_outlet(o.room, o.name, o.comNb, o.nbId)
       o.uuid = id
     end
 
@@ -60,7 +62,7 @@ module OutletsHelper
     end
 
     def updateoutlet(o)
-      @adminWS.update_outlet(o.uuid, o.name, o.room, o.state)
+      @adminWS.update_outlet(o.uuid, o.name, o.room, o.state, o.comNb, o.nbId)
     end
 
     private_class_method :new

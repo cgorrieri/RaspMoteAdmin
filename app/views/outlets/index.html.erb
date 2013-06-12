@@ -16,8 +16,8 @@
         <td><%= outlet.name %></td>
         <td>
             <div class="onoffswitch">
-              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="outlet_<%= outlet.id %>" <% if(outlet.state) %>checked<% end %> onclick="switchOnOff(<%= outlet.uuid %>,this.checked)"/>
-              <label class="onoffswitch-label" for="outlet_<%= outlet.id %>">
+              <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="outlet_<%= outlet.uuid %>" <%= if outlet.state then "checked" end %> onclick="switchOnOff(<%= outlet.uuid %>,this.checked)"/>
+              <label class="onoffswitch-label" for="outlet_<%= outlet.uuid %>">
                 <div class="onoffswitch-inner"></div>
                 <div class="onoffswitch-switch"></div>
               </label>

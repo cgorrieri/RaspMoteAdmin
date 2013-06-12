@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(:version => 20130606110539) do
     t.string   "name"
     t.string   "room"
     t.boolean  "state"
+    t.string   "comNb"
+    t.string   "nbId"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

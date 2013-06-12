@@ -8,18 +8,6 @@
 
 %>
 <%= form_tag((@outlet.uuid.nil? ? "/outlets/": "/outlets/#{@outlet.uuid}/"), :method => @outlet.uuid.nil? ? :post : :put) do |f| %>
-  <% if @outlet.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@outlet.errors.count, "error") %> prohibited this outlet from being saved:</h2>
-
-      <ul>
-      <% @outlet.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field">
     <%= label_tag "outlet[name]", "Name" %><br />
     <%= text_field_tag "outlet[name]", @outlet.name %>
@@ -31,6 +19,14 @@
    <div class="field">
     <%= label_tag "outlet[room]", "On", :for=>"true" %><%= radio_button_tag "outlet[state]", true, @outlet.state, :id=>"true" %>
     <%= label_tag "outlet[room]", "Off", :for=>"false" %><%= radio_button_tag "outlet[state]", false, !@outlet.state, :id=>"false" %>
+  </div>
+  <div class="field">
+    <%= label_tag "outlet[comNb]", "Commande Number" %><br />
+    <%= text_field_tag "outlet[comNb]", @outlet.comNb %>
+  </div>
+  <div class="field">
+    <%= label_tag "outlet[nbId]", "Number Id" %><br />
+    <%= text_field_tag "outlet[nbId]", @outlet.nbId %>
   </div>
   <div class="actions">
     <%= submit_tag (@outlet.uuid.nil? ? "Create": "Update") %>
