@@ -2,9 +2,9 @@ require 'soap/wsdlDriver'
 module OutletsHelper
   class WebService
     def initialize
-      wsdl_url = "http://localhost:9999/ws/raspberry?wsdl"
+      wsdl_url = "http://localhost:999O/ws/raspberry?wsdl"
       @publicWS = SOAP::WSDLDriverFactory.new(wsdl_url).create_rpc_driver
-      wsdl_url_admin = "http://localhost:9997/ws/admin?wsdl"
+      wsdl_url_admin = "http://localhost:9991/ws/admin?wsdl"
       @adminWS = SOAP::WSDLDriverFactory.new(wsdl_url_admin).create_rpc_driver
     end
 
